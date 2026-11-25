@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+out/
+*.tsbuildinfo
+coverage/
+
+# Rust / Tauri
+target/
+.tauri/
+apps/desktop/src-tauri/gen/
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+
+# Internal handoff docs
+docs/gemini-handoff/
