@@ -1,0 +1,16 @@
+{
+  "name": "@solanostickers/core",
+  "version": "1.0.0",
+  "author": "César Solano",
+  "license": "MIT OR Apache-2.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "tsc --noEmit"
+  }
+}

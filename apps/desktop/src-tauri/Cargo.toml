@@ -1,0 +1,23 @@
+[package]
+name = "solanostickers-desktop"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+name = "solanostickers_desktop_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "gzip"] }
+serde = { workspace = true }
+serde_json = { workspace = true }
+solanostickers-audio-engine = { path = "../../../crates/audio-engine" }
+solanostickers-image-engine = { path = "../../../crates/image-engine" }
+solanostickers-project-store = { path = "../../../crates/project-store" }
+tauri = { version = "2", features = ["custom-protocol"] }
+tokio = { version = "1", features = ["net", "time"] }
+url = "2"

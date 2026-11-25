@@ -1,0 +1,11 @@
+[package]
+name = "solanostickers-image-engine"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+gif = "0.13"
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp", "gif"] }
+serde = { workspace = true }
+thiserror = { workspace = true }

@@ -1,0 +1,79 @@
+/* Phone-specific layer on top of packages/ui/src/styles.css */
+
+html,
+body {
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* 100vh on iOS Safari includes the area under the toolbars; dvh tracks the visible area.
+   Safe-area insets keep buttons clear of the notch and the home indicator. */
+.stik-shell {
+  height: 100vh;
+  height: 100dvh;
+  padding: calc(14px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right))
+    calc(14px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left));
+}
+
+@media (pointer: coarse) {
+  /* Apple's minimum comfortable touch target is 44 pt */
+  .stik-corner-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+
+  .stik-trans-label {
+    font-size: 13px;
+  }
+
+  .stik-trans-chip {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .stik-color-chip input {
+    width: 34px;
+    height: 34px;
+  }
+
+  .stik-pill-btn {
+    padding: 11px 14px;
+    font-size: 14px;
+  }
+
+  .stik-play-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .stik-preview-box {
+    width: min(74vw, 320px);
+    height: min(74vw, 320px);
+  }
+
+  .stik-empty-title {
+    font-size: 16px;
+  }
+
+  .stik-empty-hint {
+    font-size: 13px;
+  }
+
+  .stik-res-badge {
+    font-size: 11px;
+    padding: 3px 9px;
+  }
+
+  .stik-popover button {
+    min-height: 44px;
+  }
+
+  /* iOS zooms into any focused field smaller than 16px */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}

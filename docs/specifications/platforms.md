@@ -1,0 +1,83 @@
+# Platform specification
+
+SolanoStickers ships three clients. They share the project schema, the validation rules, and the screen flow. They do not share one media engine.
+
+## Capability matrix
+
+| Capability | Windows app | macOS app | Chrome extension |
+| --- | --- | --- | --- |
+| Paste image | Yes, Ctrl+V | Yes, Cmd+V | Yes, while the editor tab is focused |
+| Paste MyInstants URL | Yes | Yes | Yes |
+| Drag and drop files | Yes | Yes | Yes, onto the editor page |
+| System file picker | Yes | Yes | Yes, through the page file input |
+| Choose an output folder | Yes | Yes | No. The browser downloads files |
+| Local project index | SQLite | SQLite | IndexedDB for the open project only |
+| Portable package | Read and write | Read and write | Read and write |
+| MP3 decode and trim | Yes | Yes | Yes, when the browser can decode the file |
+| Ogg Opus encode | Yes | Yes | Best effort via the web encoder. Otherwise AC-014 |
+| WebP encode with alpha | Yes | Yes | Yes, via the shared web encoder |
+| MyInstants fetch | Rust HTTP client | Rust HTTP client | Extension host permission, same allowlist |
+| Install into WhatsApp | No | No | No |
+| Script WhatsApp Web | No | No | No |
+
+## Windows
+
+- Package as an installed application with a Start menu shortcut and an uninstaller.
+- Use the system WebView2. The installer documents the WebView2 dependency and may run the Microsoft evergreen bootstrapper when the runtime is missing.
+- File paths and exported names are Unicode-safe and do not contain `<>:"/\|?*`.
+- Clipboard image priority: PNG, then DIB with alpha when offered, then a file path if the clipboard contains a file drop.
+- The app writes working files under the per-user local app data directory.
+
+## macOS
+
+- Package as a `.app` inside a `.dmg`.
+- v1 build target is `aarch64-apple-darwin`.
+- Request no special entitlements in v1 beyond what Tauri needs for file dialogs and network client access. No microphone entitlement.
+- Clipboard image priority matches Windows: PNG first.
+- Working files live in the per-user Application Support directory.
+- Keyboard shortcut for paste is Cmd+V. The rest of the editing keys follow the same commands as Windows, with Command in place of Control.
+
+Behavior that must match Windows: import rules, trim semantics, manifest, WebP limits, error texts (same catalog), and the disabled state of the native adapter.
+
+## Chrome extension
+
+### Surface
+
+The primary UI is a full browser tab opened by the toolbar action. A popup is only a launcher. The editor is not squeezed into the popup.
+
+The extension does not add a content script. It does not request access to `web.whatsapp.com`.
+
+### Permissions
+
+Request only:
+
+- `downloads`, to save the WebP, the audio, and the ZIP
+- `storage`, for the small last-project pointer
+- host permission for the MyInstants hosts listed in the MyInstants specification
+
+Do not request `<all_urls>`, `tabs`, `scripting`, `webRequest`, or `nativeMessaging` in v1.
+
+Clipboard images use the standard clipboard API inside the editor page on a user gesture. If Chrome denies the read, the UI tells the user to drop the file instead.
+
+### Processing
+
+The extension runs the web media engine defined in the architecture overview. It implements the same use cases as the desktop app.
+
+When the engine returns `unsupported-codec` or `encode-failed`, the UI keeps the project intact and offers two actions: try another file, or download the portable package and open it in the desktop app.
+
+### Distribution
+
+Development loads the extension unpacked. The release artifact is a zip of the built extension. Chrome Web Store listing is a later milestone and must repeat the privacy statement: media stays on the device except for the MyInstants fetch the user requested.
+
+## Parity rule
+
+A project saved by any client opens in the other clients. Media bytes inside the package are the source of truth. A client may rebuild waveform peaks. It must not silently re-encode stored assets on open.
+
+## Handoff to WhatsApp, all clients
+
+v1 handoff is manual:
+
+1. The user exports the bundle or the separate WebP and audio.
+2. The user sends or attaches those files with whatever WhatsApp client they already use.
+
+SolanoStickers does not automate that step. The official third-party sticker API is an Android and iOS app contract and cannot be called from Windows, macOS, or Chrome.

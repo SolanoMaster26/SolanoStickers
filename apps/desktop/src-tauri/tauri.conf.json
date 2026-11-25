@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "SolanoStickers",
+  "version": "1.1.2",
+  "identifier": "app.solanostickers.desktop",
+  "build": {
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "SolanoStickers",
+        "width": 440,
+        "height": 540,
+        "center": true,
+        "resizable": true,
+        "minWidth": 360,
+        "minHeight": 460
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self' blob: data:; img-src 'self' blob: data:; media-src 'self' blob: data:; connect-src https://www.myinstants.com https://myinstants.com"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

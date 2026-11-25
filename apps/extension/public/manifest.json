@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "SolanoStickers",
+  "version": "1.1.2",
+  "description": "Attach a sound clip of up to 5 or 10 seconds to an existing sticker locally and export a video.",
+  "icons": {
+    "32": "icons/32x32.png",
+    "128": "icons/128x128.png"
+  },
+  "action": {
+    "default_title": "SolanoStickers",
+    "default_icon": {
+      "32": "icons/32x32.png",
+      "128": "icons/128x128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": ["downloads", "storage"],
+  "host_permissions": [
+    "https://www.myinstants.com/*",
+    "https://myinstants.com/*"
+  ]
+}

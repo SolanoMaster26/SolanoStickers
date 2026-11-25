@@ -1,0 +1,10 @@
+[package]
+name = "solanostickers-audio-engine"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+symphonia = { version = "0.5", default-features = false, features = ["mp3", "pcm", "wav", "ogg", "vorbis", "aac", "isomp4"] }
+thiserror = { workspace = true }

@@ -1,0 +1,23 @@
+{
+  "name": "@solanostickers/web",
+  "version": "1.1.2",
+  "author": "César Solano",
+  "license": "MIT OR Apache-2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@solanostickers/core": "*",
+    "@solanostickers/media-web": "*",
+    "@solanostickers/providers": "*",
+    "@solanostickers/ui": "*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
